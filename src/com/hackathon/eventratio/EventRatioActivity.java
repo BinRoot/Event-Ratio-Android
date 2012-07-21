@@ -57,8 +57,8 @@ public class EventRatioActivity extends Activity {
         });
         
         
-       ListView lv = (ListView)findViewById(R.id.list);
-       lv.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, this.fetchTwitterPublicTimeline()));
+        TextView t = (TextView)findViewById(R.id.test);
+        t.setText(forTheLulz());
     }
 	
     
@@ -68,26 +68,26 @@ public class EventRatioActivity extends Activity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
     
-    public ArrayList<String> fetchTwitterPublicTimeline()
+    public String forTheLulz()
     {
-        ArrayList<String> listItems = new ArrayList<String>();
-         
+    	String numMales = "";
         try {
             URL twitter = new URL(
-                    "http://twitter.com/statuses/public_timeline.json");
+                    "http://aqueous-cove-9179.herokuapp.com/sample.json");
             URLConnection tc = twitter.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     tc.getInputStream()));
  
+            String jsonResult = "";
             String line;
             while ((line = in.readLine()) != null) {
-                JSONArray ja = new JSONArray(line);
- 
-                for (int i = 0; i < ja.length(); i++) {
-                    JSONObject jo = (JSONObject) ja.get(i);
-                    listItems.add(jo.getString("text"));
-                }
+                jsonResult += line;
             }
+            
+            JSONObject json = new JSONObject(jsonResult);
+            
+             numMales = json.getString("male");
+            
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -98,6 +98,6 @@ public class EventRatioActivity extends Activity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return listItems;
+        return numMales;
     }
 }
