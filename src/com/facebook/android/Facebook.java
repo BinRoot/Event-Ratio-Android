@@ -110,9 +110,9 @@ public class Facebook {
      *
      * See authorize() below for @params.
      */
-    public void authorize(Activity activity, final DialogListener listener) {
+    public void authorize(Activity activity, final DialogListener dialogListener) {
         authorize(activity, new String[] {}, DEFAULT_AUTH_ACTIVITY_CODE,
-                listener);
+                dialogListener);
     }
 
     /**
