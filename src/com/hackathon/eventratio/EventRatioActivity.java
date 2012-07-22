@@ -71,8 +71,6 @@ public class EventRatioActivity extends Activity {
         		"friends_events","user_relationships","friends_relationships",
         		"user_relationship_details","friends_relationship_details"};
         
-        
-        
         facebook.authorize(this, permisisons, new DialogListener() {
             
             public void onComplete(Bundle values) {
@@ -86,11 +84,23 @@ public class EventRatioActivity extends Activity {
                 	Event currentEvent = eventList.get(currentEventIndex);
                 	
                 	
+//                	InputStream myHTMLIS = getResources().openRawResource(R.raw.event);
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
+//                    StringBuilder sb = new StringBuilder();
+//            		String line = null;
+//            		try {
+//            			while ((line = br.readLine()) != null) {
+//            				sb.append(line);
+//            			}
+//            		} catch (IOException e1) {
+//            			e1.printStackTrace();
+//            		} 
+//            		
+//            		Event currentEvent = new Event(sb.toString());
             		
                     Log.d(DEBUG, "event: " + currentEvent);
                 
                     displayEvent(currentEvent);
-                    
 
                 	//List<Badge> badgeList = new ArrayList<Badge>();
                     
@@ -142,6 +152,9 @@ public class EventRatioActivity extends Activity {
         TextView tv3 = (TextView)findViewById(R.id.eventLoc);
         tv3.setText(currentEvent.getLocation());
         
+        setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
+        setupBarChart(currentEvent.getAges());
+        
         gal = (Gallery)findViewById(R.id.badgeGal);
     	List<Badge> badgeList = currentEvent.getBadges();
     	//List<Badge> badgeList = new ArrayList<Badge>();
@@ -172,10 +185,9 @@ public class EventRatioActivity extends Activity {
     
     public class GraphDrawAsync extends AsyncTask<Void, Void, Void> {
 
-    	
 		@Override
 		protected Void doInBackground(Void... params) {
-			
+			// TODO Auto-generated method stub
 			return null;
 		}
     	
