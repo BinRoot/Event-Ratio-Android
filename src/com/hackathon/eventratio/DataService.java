@@ -64,7 +64,7 @@ public class DataService {
 		String url = 
 			"http://aqueous-cove-9179.herokuapp.com/allevents?access_token=" + token;
 		
-		List<Event> events = new ArrayList<Event>();
+		List<Event> eventList = new ArrayList<Event>();
 		
 		try {
 			JSONObject json = new JSONObject(getData(url));
@@ -72,6 +72,7 @@ public class DataService {
 			
 			for (int i = 0; i < events.length(); i++) {  
 				String eventID = events.getString(i); 
+				
 			} 
 			
 		} catch (JSONException e) {
