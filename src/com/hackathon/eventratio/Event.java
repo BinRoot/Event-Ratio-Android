@@ -57,7 +57,7 @@ public class Event {
 			this.setLocation(json.getString("location"));
 			this.setAverageAge(Double.parseDouble(json.getString("averageAge")));
 			//So ghetto I know
-			this.setDate(new Date(Long.parseLong(json.getString("time"))));
+			this.setDate(new Date( Long.parseLong(json.getString("time"))*1000 ));
 			
 			List<Integer> ageList = new ArrayList<Integer>();
 			

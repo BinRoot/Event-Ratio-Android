@@ -38,6 +38,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
@@ -59,6 +61,8 @@ public class EventRatioActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+     
         
         String [] permisisons = {"user_birthday","friends_birthday","user_events",
         		"friends_events","user_relationships","friends_relationships",
@@ -109,34 +113,59 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
         
-        String FILENAME = "fb_token";
-        String string = facebook.getAccessToken();
-
-        try {
-        	FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-        	fos.write(string.getBytes());
-			fos.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+        
+//        String FILENAME = "fb_token";
+//        String string = facebook.getAccessToken();
+//
+//        try {
+//        	FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+//        	Log.d(DEBUG, "fos: "+fos);
+//        	Log.d(DEBUG, "fb: "+facebook);
+//        	Log.d(DEBUG, "fb2: "+facebook.getAccessToken());
+//        	fos.write(string.getBytes());
+//			fos.close();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
     }
     
     private void displayEvent(Event currentEvent) {
     	TextView tv = (TextView)findViewById(R.id.eventName);
         tv.setText(currentEvent.getName());
+        
+        TextView tv2 = (TextView)findViewById(R.id.eventTime);
+        tv2.setText(currentEvent.getDate().toLocaleString());
+        
+        TextView tv3 = (TextView)findViewById(R.id.eventLoc);
+        tv3.setText(currentEvent.getLocation());
+        
         setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
         setupBarChart(currentEvent.getAges());
         
         Gallery gal = (Gallery)findViewById(R.id.badgeGal);
     	List<Badge> badgeList = currentEvent.getBadges();
     	//List<Badge> badgeList = new ArrayList<Badge>();
-        gal.setAdapter(new BadgeAdapter(badgeList));
+    	final BadgeAdapter ba = new BadgeAdapter(badgeList);
+        gal.setAdapter(ba);
+        
+        gal.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+				Badge b = ba.badgeList.get(pos);
+				TextView tv = (TextView) findViewById(R.id.badgeDesc);
+				tv.setText(b.getDescription());
+				
+				TextView tv2 = (TextView) findViewById(R.id.badgeName);
+				tv2.setText(b.getName());
+			}
+        	
+		});
     }
     
     private class BadgeAdapter extends BaseAdapter {
 
-    	List<Badge> badgeList;
+    	public List<Badge> badgeList;
     	HashMap<String, Integer> imageMap = new HashMap<String, Integer>();
     	
     	public BadgeAdapter(List<Badge> badgeList) {
@@ -181,16 +210,17 @@ public class EventRatioActivity extends Activity {
 			Log.d(DEBUG, "id: "+b.getId());
 			iv.setImageResource(imageMap.get(b.getId()));
 			
-			iv.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					
-					TextView tv = (TextView) findViewById(R.id.badgeDesc);
-					tv.setText(b.getDescription());
-					
-					TextView tv2 = (TextView) findViewById(R.id.badgeName);
-					tv2.setText(b.getName());
-				}
-			});
+//			
+//			iv.setOnClickListener(new OnClickListener() {
+//				public void onClick(View v) {
+//					
+//					TextView tv = (TextView) findViewById(R.id.badgeDesc);
+//					tv.setText(b.getDescription());
+//					
+//					TextView tv2 = (TextView) findViewById(R.id.badgeName);
+//					tv2.setText(b.getName());
+//				}
+//			});
 			
 			return v;
 		}

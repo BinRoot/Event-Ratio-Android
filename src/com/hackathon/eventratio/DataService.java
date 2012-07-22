@@ -103,7 +103,7 @@ public class DataService {
 			event.setLocation(json.getString("location"));
 			event.setAverageAge(Double.parseDouble(json.getString("averageAge")));
 			//So ghetto I know
-			event.setDate(new Date(Long.parseLong(json.getString("time"))));
+			event.setDate(new Date(Long.parseLong(json.getString("time"))*1000));
 			
 			List<Integer> ageList = new ArrayList<Integer>();
 			
