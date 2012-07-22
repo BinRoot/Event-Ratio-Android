@@ -43,6 +43,7 @@ public class EventRatioActivity extends Activity {
 	String DEBUG = "EventRatio";
 	Facebook facebook = new Facebook("453762924657294");
 
+	Event currentEvent;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class EventRatioActivity extends Activity {
         
         DataService allEvents = DataService.getInstance();
         
-        Event e = allEvents.getEvent(facebook.TOKEN);
+        currentEvent = allEvents.getEvent(facebook.TOKEN);
         
         facebook.authorize(this, new DialogListener() {
             
@@ -67,24 +68,24 @@ public class EventRatioActivity extends Activity {
         String token = facebook.TOKEN;
         
      
-        setupPiChart();
+        setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
         
-        setupGaugeChart();
+        setupGaugeChart(currentEvent.getAges());
     }
     
-    private void setupPiChart() {
+    private void setupPiChart(int males, int females) {
     	WebView wvPi = (WebView)findViewById(R.id.web_pi);
         WebSettings webSettings = wvPi.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-		String output = GraphAPI.getPiChatHTML(this, 4, 5);
+		String output = GraphAPI.getPiChatHTML(this, males, females);
 		//Log.d(DEBUG, "output: "+output);
 		
 		wvPi.setHorizontalScrollBarEnabled(false);
 		wvPi.loadData(output, "text/html", null);
     }
     
-    private void setupGaugeChart() {
+    private void setupGaugeChart(List<Integer> ageList) {
     	WebView wvGuage = (WebView)findViewById(R.id.web_guage);
         WebSettings webSettings = wvGuage.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -105,8 +106,7 @@ public class EventRatioActivity extends Activity {
 			e1.printStackTrace();
 		} 
 		
-		int []ages = {5, 6, 8, 8, 8};
-		String output = GraphAPI.getBarHTML(this, ages);
+		String output = GraphAPI.getBarHTML(this, ageList);
         
 		Log.d(DEBUG, "bar: "+output);
 		

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import android.app.Activity;
 import android.util.Log;
@@ -48,7 +49,7 @@ public class GraphAPI {
 		
 	}
 	
-	public static String getBarHTML(Activity a, int [] ageArray) {
+	public static String getBarHTML(Activity a, List<Integer> ageList) {
 		InputStream myHTMLIS = a.getResources().openRawResource(R.raw.bar);
         
         BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
@@ -67,12 +68,12 @@ public class GraphAPI {
 		String HTMLStr = sb.toString();
 		
 		HashMap<Integer, Integer> ageMap = new HashMap<Integer, Integer>();
-		for(int i=0; i<ageArray.length; i++) {
-			Integer ageVal = ageMap.get(ageArray[i]);
+		for(int i=0; i<ageList.size(); i++) {
+			Integer ageVal = ageMap.get(ageList.get(i));
 			if(ageVal == null) {
 				ageVal = 0;
 			}
-			ageMap.put(ageArray[i], ageVal + 1);
+			ageMap.put(ageList.get(i), ageVal + 1);
 		}
 		
 		
@@ -80,10 +81,10 @@ public class GraphAPI {
 		
 		String newData = "['Age', 'Number of People'], ";
 		
-		ArrayList<Integer> ageList = new ArrayList<Integer>(ageMap.keySet());
-		Collections.sort(ageList);
+		ArrayList<Integer> ageList2 = new ArrayList<Integer>(ageMap.keySet());
+		Collections.sort(ageList2);
 		
-		for(int ageVal : ageList) {
+		for(int ageVal : ageList2) {
 			newData = newData + "['" + ageVal + "', " + ageMap.get(ageVal)+"], ";
 		}
 		
