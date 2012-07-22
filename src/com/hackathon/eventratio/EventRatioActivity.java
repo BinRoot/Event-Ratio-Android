@@ -38,14 +38,18 @@ import android.app.ListActivity;
 public class EventRatioActivity extends Activity {
     /** Called when the activity is first created. */
     
-	Facebook facebook = new Facebook("113271772144685");
-	
+	Facebook facebook = new Facebook("");
+
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+<<<<<<< HEAD
        
+=======
+        DataService allEvents = DataService.getInstance();
+>>>>>>> 62cb362a2eed16c2c242f5d6368cc1de161b9e30
         
         facebook.authorize(this, new DialogListener() {
             
@@ -58,10 +62,14 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
         
+<<<<<<< HEAD
      
         WebView wv = (WebView)findViewById(R.id.web_pi);
         WebSettings webSettings = wv.getSettings();
         webSettings.setJavaScriptEnabled(true);
+=======
+        String token = facebook.TOKEN;
+>>>>>>> 62cb362a2eed16c2c242f5d6368cc1de161b9e30
         
         InputStream myHTMLIS = getResources().openRawResource(R.raw.pi);
         
