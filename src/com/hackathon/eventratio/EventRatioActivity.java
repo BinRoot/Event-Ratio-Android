@@ -1,5 +1,6 @@
 package com.hackathon.eventratio;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +27,8 @@ import com.facebook.android.FacebookError;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -42,23 +45,41 @@ public class EventRatioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+       
+        
         facebook.authorize(this, new DialogListener() {
             
             public void onComplete(Bundle values) {}
 
-            
             public void onFacebookError(FacebookError error) {}
 
-            
             public void onError(DialogError e) {}
 
-            
             public void onCancel() {}
         });
         
+     
+        WebView wv = (WebView)findViewById(R.id.web_pi);
+        WebSettings webSettings = wv.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         
-        TextView t = (TextView)findViewById(R.id.test);
-        t.setText(forTheLulz());
+        InputStream myHTMLIS = getResources().openRawResource(R.raw.pi);
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
+
+        StringBuilder sb = new StringBuilder();
+
+		String line = null;
+		try {
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+        		
+        wv.loadData(sb.toString(), "text/html", null);
     }
 	
     
@@ -82,7 +103,7 @@ public class EventRatioActivity extends Activity {
             String line;
             while ((line = in.readLine()) != null) {
                 jsonResult += line;
-            }
+            } 
             
             JSONObject json = new JSONObject(jsonResult);
             
