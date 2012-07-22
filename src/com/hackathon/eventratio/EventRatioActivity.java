@@ -35,7 +35,7 @@ import android.app.ListActivity;
 public class EventRatioActivity extends Activity {
     /** Called when the activity is first created. */
     
-	Facebook facebook = new Facebook("");
+	Facebook facebook = new Facebook("453762924657294");
 
 	
     public void onCreate(Bundle savedInstanceState) {
