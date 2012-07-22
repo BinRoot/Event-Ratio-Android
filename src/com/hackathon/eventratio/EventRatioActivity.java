@@ -30,9 +30,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,7 +71,12 @@ public class EventRatioActivity extends Activity {
                 	Event currentEvent = eventList.get(currentEventIndex);
                     Log.d(DEBUG, "event: " + currentEvent);
                     setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
-                    setupGaugeChart(currentEvent.getAges());
+                    //setupGaugeChart(currentEvent.getAges());
+                    
+                    Gallery gal = (Gallery)findViewById(R.id.badgeGal);
+                	//List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
+                	List<Badge> badgeList = new ArrayList<Badge>();
+                    gal.setAdapter(new BadgeAdapter(badgeList));
                 }
                 
             }
@@ -83,9 +92,41 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
       
-
-       
         
+       
+    }
+    
+    private class BadgeAdapter extends BaseAdapter {
+
+    	List<Badge> badgeList;
+    	
+    	public BadgeAdapter(List<Badge> badgeList) {
+    		this.badgeList = badgeList;
+    	}
+    	
+		public int getCount() {
+			return badgeList.size();
+		}
+
+		public Object getItem(int pos) {
+			return badgeList.get(pos);
+		}
+
+		public long getItemId(int pos) {
+			return pos;
+		}
+
+		public View getView(int pos, View convertView, ViewGroup arg2) {
+			View v = convertView;
+
+			if(v==null) {
+				v = getLayoutInflater().inflate(R.layout.badge_item, null);
+				v.setTag(badgeList.get(pos));
+			}
+			
+			return v;
+		}
+    	
     }
     
     private void setupPiChart(int males, int females) {
