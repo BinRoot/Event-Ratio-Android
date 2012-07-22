@@ -86,7 +86,15 @@ public class DataService {
 	private static Event getEvent(String eventID) {
 		Event event = new Event();
 		
+		String url = 
+			"http://aqueous-cove-9179.herokuapp.com/event/" + eventID;
 		
+		try {
+			JSONObject json = new JSONObject(getData(url));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return event;
 	}
