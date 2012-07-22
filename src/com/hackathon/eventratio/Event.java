@@ -7,40 +7,65 @@ public class Event {
 	private int numMales;
 	private int numFemales;
 	private int numMutual;
-	private int numTotal;
+	private int numInvited;
+	private int numAttending;
+	private int numMaybe;
+	private int numDecline;
+	private List<Integer> ages;
 	private List<Badge> badges;
 	private String name;
 	private String location;
 	private Date date;
 	private String eventID;
 	
-	public Event(int numMales, int numFemales, int numMutual, int numTotal,
-			List<Badge> badges, String name, String location, Date date,
-			String eventID) {
-		super();
-		this.numMales = numMales;
-		this.numFemales = numFemales;
-		this.numMutual = numMutual;
-		this.numTotal = numTotal;
-		this.badges = badges;
-		this.name = name;
-		this.location = location;
-		this.date = date;
-		this.eventID = eventID;
-	}
-	
 	public Event() {
 		this.numMales = 0;
 		this.numFemales = 0;
 		this.numMutual = 0;
-		this.numTotal = 0;
+		this.numInvited = 0;
+		this.numAttending = 0;
+		this.numMaybe = 0;
+		this.numDecline = 0;
 		this.badges = null;
+		this.ages = null;
 		this.name = "";
 		this.location = "";
 		this.date = null;
 		this.eventID = "";
 	}
 	
+	public List<Integer> getAges() {
+		return ages;
+	}
+
+	public void setAges(List<Integer> ages) {
+		this.ages = ages;
+	}
+
+	public int getNumDecline() {
+		return numDecline;
+	}
+
+	public void setNumDecline(int numDecline) {
+		this.numDecline = numDecline;
+	}
+
+	public int getNumMaybe() {
+		return numMaybe;
+	}
+
+	public void setNumMaybe(int numMaybe) {
+		this.numMaybe = numMaybe;
+	}
+
+	public int getNumAttending() {
+		return numAttending;
+	}
+
+	public void setNumAttending(int numAttending) {
+		this.numAttending = numAttending;
+	}
+
 	public int getNumMales() {
 		return numMales;
 	}
@@ -59,11 +84,11 @@ public class Event {
 	public void setNumMutual(int numMutual) {
 		this.numMutual = numMutual;
 	}
-	public int getNumTotal() {
-		return numTotal;
+	public int getnumInvited() {
+		return numInvited;
 	}
-	public void setNumTotal(int numTotal) {
-		this.numTotal = numTotal;
+	public void setnumInvited(int numInvited) {
+		this.numInvited = numInvited;
 	}
 	public List<Badge> getBadges() {
 		return badges;
