@@ -73,7 +73,7 @@ public class DataService {
 			
 			for (int i = 0; i < events.length(); i++) {  
 				String eventID = events.getString(i); 
-				eventList.add(getEvent(eventID));
+				eventList.add(getEvent(eventID, token));
 			} 
 			
 		} catch (JSONException e) {
@@ -84,11 +84,10 @@ public class DataService {
 		return eventList;
 	}
 
-	public static Event getEvent(String eventID) {
+	public static Event getEvent(String eventID, String token) {
 		Event event = new Event();
 		
-		//String url = "http://aqueous-cove-9179.herokuapp.com/event/" + eventID;
-		String url = "http://aqueous-cove-9179.herokuapp.com/sample.json";
+		String url = "http://aqueous-cove-9179.herokuapp.com/event/" + eventID + "?access_token=" + token;
 		
 		try {
 			JSONObject json = new JSONObject(getData(url));
