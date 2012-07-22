@@ -101,8 +101,13 @@ public class EventRatioActivity extends Activity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
+		
+		int []ages = {5, 6, 8, 8, 8};
+		String output = GraphAPI.getBarHTML(this, ages);
         
-		wvGuage.loadData(sb.toString(), "text/html", null);
+		Log.d(DEBUG, "bar: "+output);
+		
+		wvGuage.loadData(output, "text/html", null);
     }
 	
     
