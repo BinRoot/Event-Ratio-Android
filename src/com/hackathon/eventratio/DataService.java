@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -96,13 +97,13 @@ public class DataService {
 			event.setnumInvited(Integer.parseInt(json.getString("invited")));
 			event.setNumAttending(Integer.parseInt(json.getString("attending")));
 			event.setNumMaybe(Integer.parseInt(json.getString("maybe")));
-			event.setNumDecline(Integer.parseInt(json.getString("decline")));
+			event.setNumDecline(Integer.parseInt(json.getString("declined")));
 			event.setNumMutual(Integer.parseInt(json.getString("mutuals")));
 			event.setName(json.getString("name"));
 			event.setLocation(json.getString("location"));
 			event.setAverageAge(Double.parseDouble(json.getString("averageAge")));
 			//So ghetto I know
-			event.setDate(new SimpleDateFormat(json.getString("time").split("T")[0]));
+			event.setDate(new Date(Long.parseLong(json.getString("time"))));
 			
 			List<Integer> ageList = new ArrayList<Integer>();
 			
