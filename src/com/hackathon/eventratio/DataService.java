@@ -64,6 +64,8 @@ public class DataService {
 		String url = 
 			"http://aqueous-cove-9179.herokuapp.com/allevents?access_token=" + token;
 		
+		List<Event> events = new ArrayList<Event>();
+		
 		try {
 			JSONObject json = new JSONObject(getData(url));
 			JSONArray events = json.getJSONArray("events");
@@ -77,7 +79,7 @@ public class DataService {
 			e.printStackTrace();
 		}
 		
-		List<Event> events = new ArrayList<Event>();
+		
 		
 		
 		
