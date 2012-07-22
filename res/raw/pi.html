@@ -6,16 +6,13 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
+          ['Task', 'Number of People'],
+          ['Male',     11],
+          ['Female',    2]
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+          title: 'Gender Ratio'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -24,6 +21,6 @@
     </script>
   </head>
   <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <div id="chart_div" style="width: 100px; height: 100px;"></div>
   </body>
 </html>
