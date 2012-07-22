@@ -4,16 +4,26 @@ public class Badge {
 
 	private String name;
 	private String Description;
+	private String id;
 	
 	public Badge() {
 		name = "";
 		Description = "";
 	}
 
-	public Badge(String name, String description) {
+	public Badge(String name, String description, String id) {
 		super();
 		this.name = name;
 		Description = description;
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {

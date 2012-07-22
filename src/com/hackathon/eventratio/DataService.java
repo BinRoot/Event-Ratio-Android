@@ -120,7 +120,7 @@ public class DataService {
 			JSONArray badges = json.getJSONArray("badges");
 			
 			for(int i = 0; i < badges.length(); i++){
-				badgeList.add(new Badge(((JSONObject) (badges.get(i))).getString("name"), ((JSONObject) (badges.get(i))).getString("description")));
+				badgeList.add(new Badge(((JSONObject) (badges.get(i))).getString("name"), ((JSONObject) (badges.get(i))).getString("description"), ((JSONObject) (badges.get(i))).getString("id")));
 			}
 			
 			event.setBadges(badgeList);
