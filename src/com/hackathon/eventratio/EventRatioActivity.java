@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -31,12 +32,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -74,8 +77,8 @@ public class EventRatioActivity extends Activity {
                     setupGaugeChart(currentEvent.getAges());
                     
                     Gallery gal = (Gallery)findViewById(R.id.badgeGal);
-                	//List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
-                	List<Badge> badgeList = new ArrayList<Badge>();
+                	List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
+                	//List<Badge> badgeList = new ArrayList<Badge>();
                     gal.setAdapter(new BadgeAdapter(badgeList));
                 }
                 
@@ -99,9 +102,23 @@ public class EventRatioActivity extends Activity {
     private class BadgeAdapter extends BaseAdapter {
 
     	List<Badge> badgeList;
+    	HashMap<String, Integer> imageMap = new HashMap<String, Integer>();
     	
     	public BadgeAdapter(List<Badge> badgeList) {
     		this.badgeList = badgeList;
+    		imageMap.put("sausageFest", R.drawable.sausagefest);
+    		imageMap.put("girlsNight", R.drawable.girlsnight);
+    		imageMap.put("cougar", R.drawable.cougar);
+    		imageMap.put("pedobear", R.drawable.pedobear);
+    		imageMap.put("socialButterfly", R.drawable.socialbutterfly);
+    		imageMap.put("SAP", R.drawable.sap);
+    		imageMap.put("intimiateGathering", R.drawable.intimiategathering);
+    		imageMap.put("attendingMaybe", R.drawable.attendingmaybe);
+    		imageMap.put("anyoneHome", R.drawable.anyonehome);
+    		imageMap.put("noShow", R.drawable.noshow);
+    		imageMap.put("successKid", R.drawable.successkid);
+    		imageMap.put("thirdWheel", R.drawable.thirdwheel);
+    		imageMap.put("rager", R.drawable.rager);
     	}
     	
 		public int getCount() {
@@ -124,8 +141,21 @@ public class EventRatioActivity extends Activity {
 				v.setTag(badgeList.get(pos));
 			}
 			
-			Badge b = badgeList.get(pos);
+			final Badge b = badgeList.get(pos);
+			ImageView iv = (ImageView)v.findViewById(R.id.badgeImage);
+			Log.d(DEBUG, "id: "+b.getId());
+			iv.setImageResource(imageMap.get(b.getId()));
 			
+			iv.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					
+					TextView tv = (TextView) findViewById(R.id.badgeDesc);
+					tv.setText(b.getDescription());
+					
+					TextView tv2 = (TextView) findViewById(R.id.badgeName);
+					tv2.setText(b.getName());
+				}
+			});
 			
 			return v;
 		}

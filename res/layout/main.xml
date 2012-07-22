@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#ffffff" >
 
     <RelativeLayout 
         android:layout_width="fill_parent"
@@ -17,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Handler"
+            android:textColor="#000000"
             android:layout_centerInParent="true"
             />
         
@@ -53,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Badges"
+            android:textColor="#000000"
             android:layout_centerInParent="true" />"
         
     </RelativeLayout>
@@ -61,7 +64,36 @@
         android:id="@+id/badgeGal"
         android:layout_width="fill_parent"
         android:layout_height="100dip"
-        android:background="#aa44dd"
+        android:background="#ffffff"
+        android:spacing="0dip"
         />
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:padding="10dip">
+        <TextView 
+            android:id="@+id/badgeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="18dip"
+            android:text=""/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip">
+        <TextView 
+            android:id="@+id/badgeDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#000000"
+            android:text=""/>
+    </RelativeLayout>
 
 </LinearLayout>
