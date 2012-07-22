@@ -35,12 +35,14 @@ import android.app.ListActivity;
 public class EventRatioActivity extends Activity {
     /** Called when the activity is first created. */
     
-	Facebook facebook = new Facebook("113271772144685");
-	
+	Facebook facebook = new Facebook("");
+
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        DataService allEvents = DataService.getInstance();
         
         facebook.authorize(this, new DialogListener() {
             
@@ -56,6 +58,7 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
         
+        String token = facebook.TOKEN;
         
         TextView t = (TextView)findViewById(R.id.test);
         t.setText(forTheLulz());
