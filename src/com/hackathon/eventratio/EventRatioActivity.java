@@ -2,6 +2,7 @@ package com.hackathon.eventratio;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,6 +28,7 @@ import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,6 +69,7 @@ public class EventRatioActivity extends Activity {
             public void onComplete(Bundle values) {
             	
             	Log.d(DEBUG, "token: "+facebook.getAccessToken());
+            	
                 eventList = DataService.getAllEvents(facebook.getAccessToken());
                 Log.d(DEBUG, "eventlist: " + eventList);
                 
@@ -105,9 +108,18 @@ public class EventRatioActivity extends Activity {
 
             public void onCancel() {}
         });
-      
         
-       
+        String FILENAME = "fb_token";
+        String string = facebook.getAccessToken();
+
+        try {
+        	FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+        	fos.write(string.getBytes());
+			fos.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
     
     private void displayEvent(Event currentEvent) {
