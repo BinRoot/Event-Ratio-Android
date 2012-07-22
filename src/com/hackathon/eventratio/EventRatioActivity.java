@@ -51,7 +51,7 @@ public class EventRatioActivity extends Activity {
         
         DataService allEvents = DataService.getInstance();
         
-        currentEvent = allEvents.getEvent(facebook.TOKEN);
+        List<Event> retreivedEvents = allEvents.getAllEvents(facebook.TOKEN);
         
         facebook.authorize(this, new DialogListener() {
             
