@@ -60,13 +60,18 @@ public class EventRatioActivity extends Activity {
                 Log.d(DEBUG, "eventlist: " + eventList);
                 
                 Event currentEvent = eventList.get(currentEventIndex);
+                Log.d(DEBUG, "event: " + currentEvent);
                 setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
                 setupGaugeChart(currentEvent.getAges());
             }
 
-            public void onFacebookError(FacebookError error) {}
+            public void onFacebookError(FacebookError error) {
+            	Log.d(DEBUG, "FacebookError: "+error.getMessage());
+            }
 
-            public void onError(DialogError e) {}
+            public void onError(DialogError e) {
+            	Log.d(DEBUG, "onErr: " + e.getMessage());
+            }
 
             public void onCancel() {}
         });
