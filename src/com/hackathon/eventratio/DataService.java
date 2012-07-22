@@ -3,6 +3,7 @@ package com.hackathon.eventratio;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,11 +84,11 @@ public class DataService {
 		return eventList;
 	}
 
-	private static Event getEvent(String eventID) {
+	public static Event getEvent(String eventID) {
 		Event event = new Event();
 		
-		String url = 
-			"http://aqueous-cove-9179.herokuapp.com/event/" + eventID;
+		//String url = "http://aqueous-cove-9179.herokuapp.com/event/" + eventID;
+		String url = "http://aqueous-cove-9179.herokuapp.com/sample.json";
 		
 		try {
 			JSONObject json = new JSONObject(getData(url));
@@ -100,8 +101,10 @@ public class DataService {
 			event.setNumMutual(Integer.parseInt(json.getString("mutuals")));
 			event.setName(json.getString("name"));
 			event.setLocation(json.getString("location"));
+			event.setAverageAge(Double.parseDouble(json.getString("averageAge")));
 			//So ghetto I know
-			event.setLocation(json.getString("time").split("T")[0]);
+			event.setDate(new SimpleDateFormat(json.getString("time").split("T")[0]));
+			
 			List<Integer> ageList = new ArrayList<Integer>();
 			
 			JSONArray ages = json.getJSONArray("ages");
@@ -112,11 +115,18 @@ public class DataService {
 			
 			event.setAges(ageList);
 			
+			List<Badge> badgeList = new ArrayList<Badge>();
 			
+			JSONArray badges = json.getJSONArray("badges");
+			
+			for(int i = 0; i < badges.length(); i++){
+				badgeList.add(new Badge(((JSONObject) (badges.get(i))).getString("name"), ((JSONObject) (badges.get(i))).getString("description")));
+			}
+			
+			event.setBadges(badgeList);
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.d(DEBUG, "shit");
 		}
 		
 		return event;
