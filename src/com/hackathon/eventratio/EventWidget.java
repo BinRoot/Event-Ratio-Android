@@ -67,7 +67,9 @@ public class EventWidget extends AppWidgetProvider {
             	DecimalFormat df = new DecimalFormat("##.#");
             	
             	String ratioStr = df.format((ev.getNumFemales()+0.0)/(ev.getNumMales()+0.0));
-            	
+            	if(ratioStr.equalsIgnoreCase("NaN")) {
+            		ratioStr = "\u221e";
+            	}
             	views.setTextViewText(R.id.ratio, ratioStr);
             	
             	Intent intent = new Intent(context, EventRatioActivity.class);

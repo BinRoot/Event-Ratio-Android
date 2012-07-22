@@ -31,6 +31,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -41,6 +43,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
@@ -63,11 +66,12 @@ public class EventRatioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-     
         
         String [] permisisons = {"user_birthday","friends_birthday","user_events",
         		"friends_events","user_relationships","friends_relationships",
         		"user_relationship_details","friends_relationship_details"};
+        
+        
         
         facebook.authorize(this, permisisons, new DialogListener() {
             
@@ -82,28 +86,14 @@ public class EventRatioActivity extends Activity {
                 	Event currentEvent = eventList.get(currentEventIndex);
                 	
                 	
-//                	InputStream myHTMLIS = getResources().openRawResource(R.raw.event);
-//                    BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
-//                    StringBuilder sb = new StringBuilder();
-//            		String line = null;
-//            		try {
-//            			while ((line = br.readLine()) != null) {
-//            				sb.append(line);
-//            			}
-//            		} catch (IOException e1) {
-//            			e1.printStackTrace();
-//            		} 
-//            		
-//            		Event currentEvent = new Event(sb.toString());
             		
                     Log.d(DEBUG, "event: " + currentEvent);
                 
                     displayEvent(currentEvent);
+                    
 
-                    Gallery gal = (Gallery)findViewById(R.id.badgeGal);
-                	List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
                 	//List<Badge> badgeList = new ArrayList<Badge>();
-                    gal.setAdapter(new BadgeAdapter(badgeList));
+                    
                     
                     SavePreferences("fb_token", facebook.getAccessToken());
                 }
@@ -138,7 +128,11 @@ public class EventRatioActivity extends Activity {
 //		}
     }
     
+    Gallery gal;
     private void displayEvent(Event currentEvent) {
+    	((TextView)findViewById(R.id.badgeName)).setText("");
+    	((TextView)findViewById(R.id.badgeDesc)).setText("");
+    	
     	TextView tv = (TextView)findViewById(R.id.eventName);
         tv.setText(currentEvent.getName());
         
@@ -148,18 +142,16 @@ public class EventRatioActivity extends Activity {
         TextView tv3 = (TextView)findViewById(R.id.eventLoc);
         tv3.setText(currentEvent.getLocation());
         
-        setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
-        setupBarChart(currentEvent.getAges());
-        
-        Gallery gal = (Gallery)findViewById(R.id.badgeGal);
+        gal = (Gallery)findViewById(R.id.badgeGal);
     	List<Badge> badgeList = currentEvent.getBadges();
     	//List<Badge> badgeList = new ArrayList<Badge>();
     	final BadgeAdapter ba = new BadgeAdapter(badgeList);
         gal.setAdapter(ba);
+ 
         
-        gal.setOnItemClickListener(new OnItemClickListener() {
+        gal.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 				Badge b = ba.badgeList.get(pos);
 				TextView tv = (TextView) findViewById(R.id.badgeDesc);
 				tv.setText(b.getDescription());
@@ -167,8 +159,26 @@ public class EventRatioActivity extends Activity {
 				TextView tv2 = (TextView) findViewById(R.id.badgeName);
 				tv2.setText(b.getName());
 			}
-        	
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
 		});
+        
+        if(badgeList.isEmpty() == false) {
+        	gal.setSelection(0);
+        }
+    }
+    
+    public class GraphDrawAsync extends AsyncTask<Void, Void, Void> {
+
+    	
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+			return null;
+		}
+    	
     }
     	  
    private void SavePreferences(String key, String value){
@@ -191,7 +201,7 @@ public class EventRatioActivity extends Activity {
     		imageMap.put("pedobear", R.drawable.pedobear);
     		imageMap.put("socialButterfly", R.drawable.socialbutterfly);
     		imageMap.put("SAP", R.drawable.sap);
-    		imageMap.put("intimiateGathering", R.drawable.intimiategathering);
+    		imageMap.put("intimiateGathering", R.drawable.intimategathering);
     		imageMap.put("attendingMaybe", R.drawable.attendingmaybe);
     		imageMap.put("anyoneHome", R.drawable.anyonehome);
     		imageMap.put("noShow", R.drawable.noshow);
@@ -224,6 +234,10 @@ public class EventRatioActivity extends Activity {
 			ImageView iv = (ImageView)v.findViewById(R.id.badgeImage);
 			Log.d(DEBUG, "id: "+b.getId());
 			iv.setImageResource(imageMap.get(b.getId()));
+			
+			
+
+			gal.setSelection(pos);
 			
 //			
 //			iv.setOnClickListener(new OnClickListener() {
@@ -291,38 +305,7 @@ public class EventRatioActivity extends Activity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
     
-    public String forTheLulz()
-    {
-    	String numMales = "";
-        try {
-            URL eventhandlerBackend = new URL(
-                    "http://aqueous-cove-9179.herokuapp.com/sample.json");
-            URLConnection tc = eventhandlerBackend.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    tc.getInputStream()));
- 
-            String jsonResult = "";
-            String line;
-            while ((line = in.readLine()) != null) {
-                jsonResult += line;
-            } 
-            
-            JSONObject json = new JSONObject(jsonResult);
-            
-             numMales = json.getString("male");
-            
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return numMales;
-    }
+   
     
     public void backClicked(View v) {
     	if(eventList.isEmpty() == false) {
@@ -356,5 +339,12 @@ public class EventRatioActivity extends Activity {
         		displayEvent(currentEvent);
     		}
     	}
+    }
+    
+    public void locClicked(View v) {
+    	String loc = eventList.get(currentEventIndex).getLocation();
+    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+    			Uri.parse("http://maps.google.com/maps?q=" + loc));
+    	startActivity(intent);
     }
 }
