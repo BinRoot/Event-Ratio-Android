@@ -24,7 +24,7 @@
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:text="Forth &gt;"
-            android:layout_alignParentRight="true" />"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
     
     <LinearLayout 
@@ -44,8 +44,24 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:layout_gravity="center"/>
-            
     </LinearLayout>
     
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="40dip">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Badges"
+            android:layout_centerInParent="true" />"
+        
+    </RelativeLayout>
+    
+    <Gallery 
+        android:id="@+id/badgeGal"
+        android:layout_width="fill_parent"
+        android:layout_height="100dip"
+        android:background="#aa44dd"
+        />
 
 </LinearLayout>

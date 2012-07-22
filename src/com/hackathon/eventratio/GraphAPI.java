@@ -67,8 +67,15 @@ public class GraphAPI {
 		
 		String HTMLStr = sb.toString();
 		
+		Log.d(DEBUG, "not dead 1");
+		
 		HashMap<Integer, Integer> ageMap = new HashMap<Integer, Integer>();
+		
+		Log.d(DEBUG, "not dead 1.5, " + ageList.size());
+		
 		for(int i=0; i<ageList.size(); i++) {
+			Log.d(DEBUG, "not dead 2");
+			
 			Integer ageVal = ageMap.get(ageList.get(i));
 			if(ageVal == null) {
 				ageVal = 0;
@@ -77,12 +84,16 @@ public class GraphAPI {
 		}
 		
 		
+		Log.d(DEBUG, "not dead 3");
+		
 		String dataStr = HTMLStr.substring(HTMLStr.indexOf("([")+2, HTMLStr.indexOf("])"));
 		
 		String newData = "['Age', 'Number of People'], ";
 		
 		ArrayList<Integer> ageList2 = new ArrayList<Integer>(ageMap.keySet());
 		Collections.sort(ageList2);
+		
+		Log.d(DEBUG, "not dead 4");
 		
 		for(int ageVal : ageList2) {
 			newData = newData + "['" + ageVal + "', " + ageMap.get(ageVal)+"], ";

@@ -51,18 +51,25 @@ public class EventRatioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        String [] permisisons = {"user_birthday","friends_birthday","user_events",
+        		"friends_events","user_relationships","friends_relationships",
+        		"user_relationship_details","friends_relationship_details"};
         
-        
-        facebook.authorize(this, new DialogListener() {
+        facebook.authorize(this, permisisons, new DialogListener() {
             
             public void onComplete(Bundle values) {
+            	
+            	Log.d(DEBUG, "token: "+facebook.getAccessToken());
                 eventList = DataService.getAllEvents(facebook.getAccessToken());
                 Log.d(DEBUG, "eventlist: " + eventList);
                 
-                Event currentEvent = eventList.get(currentEventIndex);
-                Log.d(DEBUG, "event: " + currentEvent);
-                setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
-                setupGaugeChart(currentEvent.getAges());
+                if(eventList.isEmpty() == false) {
+                	Event currentEvent = eventList.get(currentEventIndex);
+                    Log.d(DEBUG, "event: " + currentEvent);
+                    setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
+                    setupGaugeChart(currentEvent.getAges());
+                }
+                
             }
 
             public void onFacebookError(FacebookError error) {
@@ -94,6 +101,8 @@ public class EventRatioActivity extends Activity {
     }
     
     private void setupGaugeChart(List<Integer> ageList) {
+    	Log.d(DEBUG, "ageList: "+ageList);
+    	
     	WebView wvGuage = (WebView)findViewById(R.id.web_guage);
         WebSettings webSettings = wvGuage.getSettings();
         webSettings.setJavaScriptEnabled(true);
