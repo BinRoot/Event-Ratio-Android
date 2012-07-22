@@ -72,14 +72,25 @@ public class EventRatioActivity extends Activity {
                 
                 if(eventList.isEmpty() == false) {
                 	Event currentEvent = eventList.get(currentEventIndex);
+                	
+                	
+//                	InputStream myHTMLIS = getResources().openRawResource(R.raw.event);
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
+//                    StringBuilder sb = new StringBuilder();
+//            		String line = null;
+//            		try {
+//            			while ((line = br.readLine()) != null) {
+//            				sb.append(line);
+//            			}
+//            		} catch (IOException e1) {
+//            			e1.printStackTrace();
+//            		} 
+//            		
+//            		Event currentEvent = new Event(sb.toString());
+            		
                     Log.d(DEBUG, "event: " + currentEvent);
-                    setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
-                    setupGaugeChart(currentEvent.getAges());
                     
-                    Gallery gal = (Gallery)findViewById(R.id.badgeGal);
-                	List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
-                	//List<Badge> badgeList = new ArrayList<Badge>();
-                    gal.setAdapter(new BadgeAdapter(badgeList));
+                    displayEvent(currentEvent);
                 }
                 
             }
@@ -97,6 +108,18 @@ public class EventRatioActivity extends Activity {
       
         
        
+    }
+    
+    private void displayEvent(Event currentEvent) {
+    	TextView tv = (TextView)findViewById(R.id.eventName);
+        tv.setText(currentEvent.getName());
+        setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
+        setupBarChart(currentEvent.getAges());
+        
+        Gallery gal = (Gallery)findViewById(R.id.badgeGal);
+    	List<Badge> badgeList = currentEvent.getBadges();
+    	//List<Badge> badgeList = new ArrayList<Badge>();
+        gal.setAdapter(new BadgeAdapter(badgeList));
     }
     
     private class BadgeAdapter extends BaseAdapter {
@@ -167,14 +190,14 @@ public class EventRatioActivity extends Activity {
         WebSettings webSettings = wvPi.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-		String output = GraphAPI.getPiChatHTML(this, males, females);
+		String output = GraphAPI.getPiChartHTML(this, males, females);
 		//Log.d(DEBUG, "output: "+output);
 		
 		wvPi.setHorizontalScrollBarEnabled(false);
 		wvPi.loadData(output, "text/html", null);
     }
     
-    private void setupGaugeChart(List<Integer> ageList) {
+    private void setupBarChart(List<Integer> ageList) {
     	Log.d(DEBUG, "ageList: "+ageList);
     	
     	WebView wvGuage = (WebView)findViewById(R.id.web_guage);
@@ -242,5 +265,39 @@ public class EventRatioActivity extends Activity {
             e.printStackTrace();
         }
         return numMales;
+    }
+    
+    public void backClicked(View v) {
+    	if(eventList.isEmpty() == false) {
+    		currentEventIndex--;
+    		if(currentEventIndex-1 < 0) {
+        		Event currentEvent = eventList.get(eventList.size()-1);
+        		currentEventIndex = eventList.size()-1;
+        		displayEvent(currentEvent);
+        	}
+    		else {
+    			Event currentEvent = eventList.get(currentEventIndex-1);
+    			currentEventIndex--;
+        		displayEvent(currentEvent);
+    		}
+    	}
+    	
+    }
+    
+    public void nextClicked(View v) {
+    	if(eventList.isEmpty() == false) {
+    		
+    		if(currentEventIndex+1 >= eventList.size()) {
+        		Event currentEvent = eventList.get(0);
+        		currentEventIndex = 0;
+        		displayEvent(currentEvent);
+        		
+        	}
+    		else {
+    			Event currentEvent = eventList.get(currentEventIndex+1);
+    			currentEventIndex++;
+        		displayEvent(currentEvent);
+    		}
+    	}
     }
 }

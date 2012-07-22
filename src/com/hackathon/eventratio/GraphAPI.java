@@ -16,7 +16,7 @@ public class GraphAPI {
 	
 	private static String DEBUG = "Graph";
 	
-	public static String getPiChatHTML(Activity a, int males, int females) {
+	public static String getPiChartHTML(Activity a, int males, int females) {
 		InputStream myHTMLIS = a.getResources().openRawResource(R.raw.pi);
         
         BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
@@ -97,6 +97,10 @@ public class GraphAPI {
 		
 		for(int ageVal : ageList2) {
 			newData = newData + "['" + ageVal + "', " + ageMap.get(ageVal)+"], ";
+		}
+		
+		if(ageList2.isEmpty()) {
+			newData = newData + "['" + 0 + "', " + 0+"], ";
 		}
 		
 		newData = newData.substring(0, newData.length()-2);

@@ -12,6 +12,7 @@
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:text="&lt; Back"
+            android:onClick="backClicked"
             android:layout_alignParentLeft="true" />
         
         <TextView 
@@ -26,8 +27,16 @@
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:text="Forth &gt;"
+            android:onClick="nextClicked"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
+    
+    <TextView 
+        android:id="@+id/eventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:textColor="#000000" />"
     
     <LinearLayout 
         android:layout_width="fill_parent"

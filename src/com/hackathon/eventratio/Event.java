@@ -1,8 +1,15 @@
 package com.hackathon.eventratio;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
 
 public class Event {
 	private int numMales;
@@ -34,6 +41,47 @@ public class Event {
 		this.location = "";
 		this.date = null;
 		this.eventID = "";
+	}
+	
+	public Event(String JSONStr) {
+		try {
+			JSONObject json = new JSONObject(JSONStr);
+			this.setNumMales(Integer.parseInt(json.getString("male")));
+			this.setNumFemales(Integer.parseInt(json.getString("female")));
+			this.setnumInvited(Integer.parseInt(json.getString("invited")));
+			this.setNumAttending(Integer.parseInt(json.getString("attending")));
+			this.setNumMaybe(Integer.parseInt(json.getString("maybe")));
+			this.setNumDecline(Integer.parseInt(json.getString("declined")));
+			this.setNumMutual(Integer.parseInt(json.getString("mutuals")));
+			this.setName(json.getString("name"));
+			this.setLocation(json.getString("location"));
+			this.setAverageAge(Double.parseDouble(json.getString("averageAge")));
+			//So ghetto I know
+			this.setDate(new Date(Long.parseLong(json.getString("time"))));
+			
+			List<Integer> ageList = new ArrayList<Integer>();
+			
+			JSONArray ages = json.getJSONArray("ages");
+			
+			for(int i = 0; i < ages.length(); i++){	
+				ageList.add(Integer.parseInt(ages.getString(i)));
+			}
+			
+			this.setAges(ageList);
+			
+			List<Badge> badgeList = new ArrayList<Badge>();
+			
+			JSONArray badges = json.getJSONArray("badges");
+			
+			for(int i = 0; i < badges.length(); i++){
+				badgeList.add(new Badge(((JSONObject) (badges.get(i))).getString("name"), ((JSONObject) (badges.get(i))).getString("description"), ((JSONObject) (badges.get(i))).getString("id")));
+			}
+			
+			this.setBadges(badgeList);
+			
+		} catch (JSONException e) {
+			
+		}
 	}
 	
 	public double getAverageAge() {
