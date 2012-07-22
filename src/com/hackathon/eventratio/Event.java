@@ -1,6 +1,6 @@
 package com.hackathon.eventratio;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Event {
@@ -12,15 +12,15 @@ public class Event {
 	private int numMaybe;
 	private int numDecline;
 	private List<Integer> ages;
+	private double averageAge;
 	private List<Badge> badges;
 	private String name;
 	private String location;
-	private Date date;
+	private SimpleDateFormat date;
 	private String eventID;
 	
 	public Event() {
 		this.numMales = 0;
-		this.numFemales = 0;
 		this.numMutual = 0;
 		this.numInvited = 0;
 		this.numAttending = 0;
@@ -28,12 +28,21 @@ public class Event {
 		this.numDecline = 0;
 		this.badges = null;
 		this.ages = null;
+		this.averageAge = 0.0;
 		this.name = "";
 		this.location = "";
 		this.date = null;
 		this.eventID = "";
 	}
 	
+	public double getAverageAge() {
+		return averageAge;
+	}
+
+	public void setAverageAge(double averageAge) {
+		this.averageAge = averageAge;
+	}
+
 	public List<Integer> getAges() {
 		return ages;
 	}
@@ -108,10 +117,10 @@ public class Event {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Date getDate() {
+	public SimpleDateFormat getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(SimpleDateFormat date) {
 		this.date = date;
 	}
 	public String getEventID() {

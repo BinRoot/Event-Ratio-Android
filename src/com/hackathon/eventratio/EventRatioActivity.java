@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -48,6 +49,8 @@ public class EventRatioActivity extends Activity {
         
         DataService allEvents = DataService.getInstance();
         
+        Event e = allEvents.getEvent(facebook.TOKEN);
+        
         facebook.authorize(this, new DialogListener() {
             
             public void onComplete(Bundle values) {}
@@ -63,8 +66,6 @@ public class EventRatioActivity extends Activity {
         WebView wv = (WebView)findViewById(R.id.web_pi);
         WebSettings webSettings = wv.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        
-        String token = facebook.TOKEN;
         
         InputStream myHTMLIS = getResources().openRawResource(R.raw.pi);
         
