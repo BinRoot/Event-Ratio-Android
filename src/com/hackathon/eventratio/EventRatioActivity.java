@@ -30,6 +30,7 @@ import com.facebook.android.FacebookError;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -96,10 +97,16 @@ public class EventRatioActivity extends Activity {
 //            		Event currentEvent = new Event(sb.toString());
             		
                     Log.d(DEBUG, "event: " + currentEvent);
-                    
-                    displayEvent(currentEvent);
-                }
                 
+                    displayEvent(currentEvent);
+
+                    Gallery gal = (Gallery)findViewById(R.id.badgeGal);
+                	List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
+                	//List<Badge> badgeList = new ArrayList<Badge>();
+                    gal.setAdapter(new BadgeAdapter(badgeList));
+                    
+                    SavePreferences("fb_token", facebook.getAccessToken());
+                }
             }
 
             public void onFacebookError(FacebookError error) {
@@ -113,6 +120,7 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
         
+
         
 //        String FILENAME = "fb_token";
 //        String string = facebook.getAccessToken();
@@ -162,7 +170,14 @@ public class EventRatioActivity extends Activity {
         	
 		});
     }
-    
+    	  
+   private void SavePreferences(String key, String value){
+	   SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+	   SharedPreferences.Editor editor = sharedPreferences.edit();
+	   editor.putString(key, value);
+	   editor.commit();
+   }
+    	  
     private class BadgeAdapter extends BaseAdapter {
 
     	public List<Badge> badgeList;

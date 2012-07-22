@@ -28,19 +28,22 @@ public final class R {
         public static final int socialbutterfly=0x7f02000e;
         public static final int successkid=0x7f02000f;
         public static final int thirdwheel=0x7f020010;
+        public static final int widget_icon_back=0x7f020011;
+        public static final int widget_icon_ratio=0x7f020012;
     }
     public static final class id {
         public static final int badgeDesc=0x7f07000a;
         public static final int badgeGal=0x7f070008;
         public static final int badgeImage=0x7f070000;
         public static final int badgeName=0x7f070009;
-        public static final int event=0x7f07000c;
+        public static final int event=0x7f07000d;
         public static final int eventLoc=0x7f070005;
         public static final int eventName=0x7f070003;
         public static final int eventTime=0x7f070004;
-        public static final int ratio=0x7f07000b;
+        public static final int ratio=0x7f07000c;
         public static final int relBack=0x7f070001;
         public static final int relForth=0x7f070002;
+        public static final int relWig=0x7f07000b;
         public static final int web_guage=0x7f070007;
         public static final int web_pi=0x7f070006;
     }
