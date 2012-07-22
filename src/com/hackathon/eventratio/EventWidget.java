@@ -1,15 +1,23 @@
 package com.hackathon.eventratio;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
  
+import android.app.Application;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
  
 public class EventWidget extends AppWidgetProvider {
+	
+	
+	
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
  
@@ -22,10 +30,36 @@ public class EventWidget extends AppWidgetProvider {
 					R.layout.widget_layout);
  
         	DataService ds = DataService.getInstance();
+        	String token = "";
+        	
+        	FileInputStream fis;
+			try {
+				fis = context.getApplicationContext().openFileInput("fb_token");
+	        	fis.read();
+	        	
+	        	StringBuffer fileContent = new StringBuffer("");
+
+	        	byte[] buffer = new byte[1024];
+	        	int length;
+	        	while ((length = fis.read(buffer)) != -1) {
+	        	    fileContent.append(new String(buffer));
+	        	}
+	        	
+	        	token = fileContent.toString();
+	        	
+	        	fis.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
  
         	// download an event from gmail and set it up (to come...)
         	// for now well just make a dummy one
-        	views.setTextViewText(R.id.event, "Some sweet Event text!!!!");
+        	views.setTextViewText(R.id.event, token);
  
         	// update the widget
         	appWidgetManager.updateAppWidget(widgetId, views);
