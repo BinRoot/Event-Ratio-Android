@@ -28,6 +28,7 @@ import com.facebook.android.FacebookError;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -43,19 +44,25 @@ public class EventRatioActivity extends Activity {
 	String DEBUG = "EventRatio";
 	Facebook facebook = new Facebook("453762924657294");
 
-	Event currentEvent;
+	List<Event> eventList;
+	int currentEventIndex = 0;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        DataService allEvents = DataService.getInstance();
         
-        List<Event> retreivedEvents = allEvents.getAllEvents(facebook.TOKEN);
         
         facebook.authorize(this, new DialogListener() {
             
-            public void onComplete(Bundle values) {}
+            public void onComplete(Bundle values) {
+                eventList = DataService.getAllEvents(facebook.getAccessToken());
+                Log.d(DEBUG, "eventlist: " + eventList);
+                
+                Event currentEvent = eventList.get(currentEventIndex);
+                setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
+                setupGaugeChart(currentEvent.getAges());
+            }
 
             public void onFacebookError(FacebookError error) {}
 
@@ -63,14 +70,10 @@ public class EventRatioActivity extends Activity {
 
             public void onCancel() {}
         });
-        
+      
 
-        String token = facebook.TOKEN;
+       
         
-     
-        setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
-        
-        setupGaugeChart(currentEvent.getAges());
     }
     
     private void setupPiChart(int males, int females) {
