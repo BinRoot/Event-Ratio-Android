@@ -72,7 +72,7 @@ public class DataService {
 			
 			for (int i = 0; i < events.length(); i++) {  
 				String eventID = events.getString(i); 
-				
+				eventList.add(getEvent(eventID));
 			} 
 			
 		} catch (JSONException e) {
@@ -80,12 +80,14 @@ public class DataService {
 			e.printStackTrace();
 		}
 		
+		return eventList;
+	}
+
+	private static Event getEvent(String eventID) {
+		Event event = new Event();
 		
 		
 		
-		
-		
-		
-		return null;
+		return event;
 	}
 }
