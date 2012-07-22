@@ -72,9 +72,9 @@ public class EventRatioActivity extends Activity {
     {
     	String numMales = "";
         try {
-            URL twitter = new URL(
+            URL eventhandlerBackend = new URL(
                     "http://aqueous-cove-9179.herokuapp.com/sample.json");
-            URLConnection tc = twitter.openConnection();
+            URLConnection tc = eventhandlerBackend.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     tc.getInputStream()));
  
