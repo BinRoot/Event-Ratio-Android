@@ -4,9 +4,48 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <WebView 
-        android:id="@+id/web_pi"
+    <RelativeLayout 
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />"
+        android:layout_height="wrap_content">
+        <Button 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="&lt; Back"
+            android:layout_alignParentLeft="true" />
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event Handler"
+            android:layout_centerInParent="true"
+            />
+        
+        <Button 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="Forth &gt;"
+            android:layout_alignParentRight="true" />"
+    </RelativeLayout>
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="200dip"
+        android:orientation="horizontal">
+        <WebView 
+	        android:id="@+id/web_pi"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="center"/>
+        
+        <WebView 
+	        android:id="@+id/web_guage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="center"/>
+            
+    </LinearLayout>
+    
 
 </LinearLayout>

@@ -27,6 +27,7 @@ import com.facebook.android.FacebookError;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -38,7 +39,7 @@ import android.app.ListActivity;
 public class EventRatioActivity extends Activity {
     /** Called when the activity is first created. */
     
-
+	String DEBUG = "EventRatio";
 	Facebook facebook = new Facebook("453762924657294");
 
 	
@@ -59,14 +60,33 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
         
-     
-        WebView wv = (WebView)findViewById(R.id.web_pi);
-        WebSettings webSettings = wv.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        
+
         String token = facebook.TOKEN;
         
-        InputStream myHTMLIS = getResources().openRawResource(R.raw.pi);
+     
+        setupPiChart();
+        
+        setupGaugeChart();
+    }
+    
+    private void setupPiChart() {
+    	WebView wvPi = (WebView)findViewById(R.id.web_pi);
+        WebSettings webSettings = wvPi.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        
+		String output = GraphAPI.getPiChatHTML(this, 4, 5);
+		//Log.d(DEBUG, "output: "+output);
+		
+		wvPi.setHorizontalScrollBarEnabled(false);
+		wvPi.loadData(output, "text/html", null);
+    }
+    
+    private void setupGaugeChart() {
+    	WebView wvGuage = (WebView)findViewById(R.id.web_guage);
+        WebSettings webSettings = wvGuage.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        
+        InputStream myHTMLIS = getResources().openRawResource(R.raw.bar);
         
         BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
 
@@ -81,8 +101,8 @@ public class EventRatioActivity extends Activity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
-        		
-        wv.loadData(sb.toString(), "text/html", null);
+        
+		wvGuage.loadData(sb.toString(), "text/html", null);
     }
 	
     

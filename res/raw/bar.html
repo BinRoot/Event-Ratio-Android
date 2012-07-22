@@ -6,23 +6,24 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Task', 'Number of People'],
-          ['Male', 11],
-          ['Female', 2]
+          ['Age', 'Number of People'],
+          ['17',  7],
+          ['19',  10],
+          ['20',  25],
+          ['21',  7]
         ]);
 
         var options = {
-          title: 'Gender Ratio',
-          chartArea:{left:20,top:0,width:"50%",height:"75%"},
-          legend:{position: 'bottom', textStyle: {color: 'black', fontSize: 12}}
+          title: 'Number of People',
+          hAxis: {title: 'Age', titleTextStyle: {color: 'red'}}
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
   </head>
   <body>
-    <div id="chart_div" ></div>
+    <div id="chart_div" style="width: 150px; height: 150px;"></div>
   </body>
 </html>
