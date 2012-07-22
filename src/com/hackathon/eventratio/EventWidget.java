@@ -70,10 +70,9 @@ public class EventWidget extends AppWidgetProvider {
             	
             	views.setTextViewText(R.id.ratio, ratioStr);
             	
-            	Intent intent = new Intent(); 
-            	intent.setClassName("com.hackathon.eventratio", "com.hackathon.eventratio.EventRatioActivity"); 
-                PendingIntent myPI = PendingIntent.getService(context, 0, intent, 0);
-            	views.setOnClickPendingIntent(R.id.ratio, myPI);
+            	Intent intent = new Intent(context, EventRatioActivity.class);
+                PendingIntent myPI = PendingIntent.getActivity(context, 0, intent, 0);
+            	views.setOnClickPendingIntent(R.id.relWig, myPI);
         	}
         	
         	// update the widget

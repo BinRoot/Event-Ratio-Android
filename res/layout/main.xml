@@ -64,80 +64,89 @@
         </RelativeLayout>
     </RelativeLayout>
     
-    
-    <TextView 
-        android:id="@+id/eventName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dip"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:textSize="16dip"
-        android:layout_gravity="center_horizontal" />
-    
-    <LinearLayout 
-        android:orientation="horizontal"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip">
-        
-        <TextView 
+        android:orientation="vertical">
+	    <TextView 
+	        android:id="@+id/eventName"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:layout_margin="10dip"
+	        android:textColor="#000000"
 	        android:textStyle="bold"
-	        android:text="Time: "
-	        android:textColor="#000000" />
-        
-        <TextView 
-	        android:id="@+id/eventTime"
-	        android:layout_width="wrap_content"
+	        android:textSize="16dip"
+	        android:layout_gravity="center_horizontal" />
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:textColor="#000000" />
-        
-    </LinearLayout>
+	        android:layout_marginLeft="10dip">
+	        
+	        <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textStyle="bold"
+		        android:text="Time: "
+		        android:textColor="#000000" />
+	        
+	        <TextView 
+		        android:id="@+id/eventTime"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#000000" />
+	        
+	    </LinearLayout>
+	    
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dip">
+	        
+	        <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textStyle="bold"
+		        android:text="Location: "
+		        android:textColor="#000000" />
+	        
+	        <TextView 
+		        android:id="@+id/eventLoc"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#000000" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="200dip"
+	        android:orientation="horizontal">
+	        <WebView 
+		        android:id="@+id/web_pi"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:layout_gravity="center"/>
+	        
+	        <WebView 
+		        android:id="@+id/web_guage"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:layout_gravity="center"/>
+	    </LinearLayout>
+	    
     
-    
-    <LinearLayout 
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip">
+   
         
-        <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textStyle="bold"
-	        android:text="Location: "
-	        android:textColor="#000000" />
-        
-        <TextView 
-	        android:id="@+id/eventLoc"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textColor="#000000" />
-        
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="200dip"
-        android:orientation="horizontal">
-        <WebView 
-	        android:id="@+id/web_pi"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:layout_gravity="center"/>
-        
-        <WebView 
-	        android:id="@+id/web_guage"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:layout_gravity="center"/>
-    </LinearLayout>
-    
-    <Gallery 
+        <Gallery 
         android:id="@+id/badgeGal"
         android:layout_width="fill_parent"
         android:layout_height="100dip"
@@ -145,34 +154,37 @@
         android:spacing="0dip"
         />
     
-    <RelativeLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip">
-        <TextView 
-            android:id="@+id/badgeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="18dip"
-            android:text=""/>
-    </RelativeLayout>
-    
-    <RelativeLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip">
-        <TextView 
-            android:id="@+id/badgeDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#000000"
-            android:text=""/>
-    </RelativeLayout>
+	    <RelativeLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dip"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip">
+	        <TextView 
+	            android:id="@+id/badgeName"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:textColor="#000000"
+	            android:textStyle="bold"
+	            android:textSize="18dip"
+	            android:text=""/>
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip">
+	        <TextView 
+	            android:id="@+id/badgeDesc"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:textColor="#000000"
+	            android:text=""/>
+	    </RelativeLayout>
+        
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
