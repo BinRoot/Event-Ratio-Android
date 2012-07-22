@@ -91,6 +91,29 @@ public class DataService {
 		
 		try {
 			JSONObject json = new JSONObject(getData(url));
+			event.setNumMales(Integer.parseInt(json.getString("male")));
+			event.setNumFemales(Integer.parseInt(json.getString("female")));
+			event.setnumInvited(Integer.parseInt(json.getString("invited")));
+			event.setNumAttending(Integer.parseInt(json.getString("attending")));
+			event.setNumMaybe(Integer.parseInt(json.getString("maybe")));
+			event.setNumDecline(Integer.parseInt(json.getString("decline")));
+			event.setNumMutual(Integer.parseInt(json.getString("mutuals")));
+			event.setName(json.getString("name"));
+			event.setLocation(json.getString("location"));
+			//So ghetto I know
+			event.setLocation(json.getString("time").split("T")[0]);
+			List<Integer> ageList = new ArrayList<Integer>();
+			
+			JSONArray ages = json.getJSONArray("ages");
+			
+			for(int i = 0; i < ages.length(); i++){	
+				ageList.add(Integer.parseInt(ages.getString(i)));
+			}
+			
+			event.setAges(ageList);
+			
+			
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
