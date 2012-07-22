@@ -71,7 +71,7 @@ public class EventRatioActivity extends Activity {
                 	Event currentEvent = eventList.get(currentEventIndex);
                     Log.d(DEBUG, "event: " + currentEvent);
                     setupPiChart(currentEvent.getNumMales(), currentEvent.getNumFemales());
-                    //setupGaugeChart(currentEvent.getAges());
+                    setupGaugeChart(currentEvent.getAges());
                     
                     Gallery gal = (Gallery)findViewById(R.id.badgeGal);
                 	//List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
@@ -123,6 +123,9 @@ public class EventRatioActivity extends Activity {
 				v = getLayoutInflater().inflate(R.layout.badge_item, null);
 				v.setTag(badgeList.get(pos));
 			}
+			
+			Badge b = badgeList.get(pos);
+			
 			
 			return v;
 		}
