@@ -30,6 +30,7 @@ import com.facebook.android.FacebookError;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -83,8 +84,9 @@ public class EventRatioActivity extends Activity {
                 	List<Badge> badgeList = eventList.get(currentEventIndex).getBadges();
                 	//List<Badge> badgeList = new ArrayList<Badge>();
                     gal.setAdapter(new BadgeAdapter(badgeList));
+                    
+                    SavePreferences("fb_token", facebook.getAccessToken());
                 }
-                
             }
 
             public void onFacebookError(FacebookError error) {
@@ -98,19 +100,15 @@ public class EventRatioActivity extends Activity {
             public void onCancel() {}
         });
         
-        String FILENAME = "fb_token";
-        String string = facebook.getAccessToken();
-
-        try {
-        	FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-        	fos.write(string.getBytes());
-			fos.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
     }
-    
+    	  
+   private void SavePreferences(String key, String value){
+	   SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+	   SharedPreferences.Editor editor = sharedPreferences.edit();
+	   editor.putString(key, value);
+	   editor.commit();
+   }
+    	  
     private class BadgeAdapter extends BaseAdapter {
 
     	List<Badge> badgeList;
@@ -221,38 +219,5 @@ public class EventRatioActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         facebook.authorizeCallback(requestCode, resultCode, data);
-    }
-    
-    public String forTheLulz()
-    {
-    	String numMales = "";
-        try {
-            URL eventhandlerBackend = new URL(
-                    "http://aqueous-cove-9179.herokuapp.com/sample.json");
-            URLConnection tc = eventhandlerBackend.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    tc.getInputStream()));
- 
-            String jsonResult = "";
-            String line;
-            while ((line = in.readLine()) != null) {
-                jsonResult += line;
-            } 
-            
-            JSONObject json = new JSONObject(jsonResult);
-            
-             numMales = json.getString("male");
-            
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return numMales;
     }
 }
