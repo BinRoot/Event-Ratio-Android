@@ -1,6 +1,7 @@
 package com.hackathon.eventratio;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Event {
@@ -16,7 +17,7 @@ public class Event {
 	private List<Badge> badges;
 	private String name;
 	private String location;
-	private SimpleDateFormat date;
+	private Date date;
 	private String eventID;
 	
 	public Event() {
@@ -117,10 +118,10 @@ public class Event {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public SimpleDateFormat getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(SimpleDateFormat date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public String getEventID() {
