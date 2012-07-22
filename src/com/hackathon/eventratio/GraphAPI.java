@@ -41,9 +41,9 @@ public class GraphAPI {
 		
 		String newData = "['Task', 'Number of People'], ";
 		
-		newData = newData + "['Male', " + males+"], ";
+		newData = newData + "['M', " + males+"], ";
 		
-		newData = newData + "['Female', " + females+"] ";
+		newData = newData + "['F', " + females+"] ";
 		
 		return HTMLStr.replace(dataStr, newData);
 		
