@@ -134,38 +134,38 @@ public class EventRatioActivity extends Activity {
     
     private void setUpEvent() {
 
-    	Log.d(DEBUG, "token: "+facebook.getAccessToken());
-    	
-        eventList = DataService.getAllEvents(facebook.getAccessToken());
-        Log.d(DEBUG, "eventlist: " + eventList);
-        
-        if(eventList.isEmpty() == false) {
-        	Event currentEvent = eventList.get(currentEventIndex);
-        	
-        	
-//                	InputStream myHTMLIS = getResources().openRawResource(R.raw.event);
-//                    BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
-//                    StringBuilder sb = new StringBuilder();
-//            		String line = null;
-//            		try {
-//            			while ((line = br.readLine()) != null) {
-//            				sb.append(line);
-//            			}
-//            		} catch (IOException e1) {
-//            			e1.printStackTrace();
-//            		} 
-//            		
-//            		Event currentEvent = new Event(sb.toString());
-    		
-            Log.d(DEBUG, "event: " + currentEvent);
-        
-            displayEvent(currentEvent);
+    	new GraphDrawAsync().execute();
+    }
+    
+    public class GraphDrawAsync extends AsyncTask<Void, Void, List<Event>> {
 
-        	//List<Badge> badgeList = new ArrayList<Badge>();
-            
-            
-            SavePreferences("fb_token", facebook.getAccessToken());
-        }
+		@Override
+		protected List<Event> doInBackground(Void... params) {
+			Log.d(DEBUG, "token: "+facebook.getAccessToken());
+	    	
+	        eventList = DataService.getAllEvents(facebook.getAccessToken());
+	        
+			return eventList;
+		}
+		
+		@Override
+		protected void onPostExecute(List<Event> eventList) {
+			Log.d(DEBUG, "eventlist: " + eventList);
+	        
+	        if(eventList.isEmpty() == false) {
+	        	Event currentEvent = eventList.get(currentEventIndex);
+	            Log.d(DEBUG, "event: " + currentEvent);
+	        
+	            displayEvent(currentEvent);
+
+	            SavePreferences("fb_token", facebook.getAccessToken());
+	            
+	            findViewById(R.id.progress_bar).setVisibility(View.GONE);
+	            findViewById(R.id.textloc).setVisibility(View.VISIBLE);
+	            findViewById(R.id.texttime).setVisibility(View.VISIBLE);
+	        }
+	        
+		}
     }
     
     Gallery gal;
@@ -213,15 +213,7 @@ public class EventRatioActivity extends Activity {
         }
     }
     
-    public class GraphDrawAsync extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-    	
-    }
+    
     	  
    private void SavePreferences(String key, String value){
 	   SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
