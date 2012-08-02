@@ -243,7 +243,7 @@ public class EventRatioActivity extends Activity {
     		imageMap.put("pedobear", R.drawable.pedobear);
     		imageMap.put("socialButterfly", R.drawable.socialbutterfly);
     		imageMap.put("SAP", R.drawable.sap);
-    		imageMap.put("intimiateGathering", R.drawable.intimategathering);
+    		imageMap.put("intimateGathering", R.drawable.intimategathering);
     		imageMap.put("attendingMaybe", R.drawable.attendingmaybe);
     		imageMap.put("anyoneHome", R.drawable.anyonehome);
     		imageMap.put("noShow", R.drawable.noshow);
