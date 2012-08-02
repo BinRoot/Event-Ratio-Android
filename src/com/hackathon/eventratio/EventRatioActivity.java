@@ -58,7 +58,8 @@ public class EventRatioActivity extends Activity {
     
 	String DEBUG = "EventRatio";
 	Facebook facebook = new Facebook("453762924657294");
-
+	private SharedPreferences mPrefs;
+	
 	List<Event> eventList;
 	int currentEventIndex = 0;
 	
@@ -66,60 +67,53 @@ public class EventRatioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        /*
+         * Get existing access_token if any
+         */
+        mPrefs = getPreferences(MODE_PRIVATE);
+        String access_token = mPrefs.getString("access_token", null);
+        long expires = mPrefs.getLong("access_expires", 0);
+        if(access_token != null) {
+            facebook.setAccessToken(access_token);
+        }
+        if(expires != 0) {
+            facebook.setAccessExpires(expires);
+        }
+        
         
         String [] permisisons = {"user_birthday","friends_birthday","user_events",
         		"friends_events","user_relationships","friends_relationships",
         		"user_relationship_details","friends_relationship_details"};
         
-        facebook.authorize(this, permisisons, new DialogListener() {
-            
-            public void onComplete(Bundle values) {
-            	
-            	Log.d(DEBUG, "token: "+facebook.getAccessToken());
-            	
-                eventList = DataService.getAllEvents(facebook.getAccessToken());
-                Log.d(DEBUG, "eventlist: " + eventList);
-                
-                if(eventList.isEmpty() == false) {
-                	Event currentEvent = eventList.get(currentEventIndex);
-                	
-                	
-//                	InputStream myHTMLIS = getResources().openRawResource(R.raw.event);
-//                    BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
-//                    StringBuilder sb = new StringBuilder();
-//            		String line = null;
-//            		try {
-//            			while ((line = br.readLine()) != null) {
-//            				sb.append(line);
-//            			}
-//            		} catch (IOException e1) {
-//            			e1.printStackTrace();
-//            		} 
-//            		
-//            		Event currentEvent = new Event(sb.toString());
-            		
-                    Log.d(DEBUG, "event: " + currentEvent);
-                
-                    displayEvent(currentEvent);
-
-                	//List<Badge> badgeList = new ArrayList<Badge>();
-                    
-                    
-                    SavePreferences("fb_token", facebook.getAccessToken());
-                }
-            }
-
-            public void onFacebookError(FacebookError error) {
-            	Log.d(DEBUG, "FacebookError: "+error.getMessage());
-            }
-
-            public void onError(DialogError e) {
-            	Log.d(DEBUG, "onErr: " + e.getMessage());
-            }
-
-            public void onCancel() {}
-        });
-        
+        /*
+         * Only call authorize if the access_token has expired.
+         */
+        if(!facebook.isSessionValid()) {
+	        facebook.authorize(this, permisisons, new DialogListener() {
+	            
+	            public void onComplete(Bundle values) {
+	            	SharedPreferences.Editor editor = mPrefs.edit();
+                    editor.putString("access_token", facebook.getAccessToken());
+                    editor.putLong("access_expires", facebook.getAccessExpires());
+                    editor.commit();
+	            	
+	            	setUpEvent();
+	            }
+	
+	            public void onFacebookError(FacebookError error) {
+	            	Log.d(DEBUG, "FacebookError: "+error.getMessage());
+	            }
+	
+	            public void onError(DialogError e) {
+	            	Log.d(DEBUG, "onErr: " + e.getMessage());
+	            }
+	
+	            public void onCancel() {}
+	        });
+        }
+        else {
+        	setUpEvent();
+        }
 
         
 //        String FILENAME = "fb_token";
@@ -136,6 +130,42 @@ public class EventRatioActivity extends Activity {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
+    }
+    
+    private void setUpEvent() {
+
+    	Log.d(DEBUG, "token: "+facebook.getAccessToken());
+    	
+        eventList = DataService.getAllEvents(facebook.getAccessToken());
+        Log.d(DEBUG, "eventlist: " + eventList);
+        
+        if(eventList.isEmpty() == false) {
+        	Event currentEvent = eventList.get(currentEventIndex);
+        	
+        	
+//                	InputStream myHTMLIS = getResources().openRawResource(R.raw.event);
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(myHTMLIS));
+//                    StringBuilder sb = new StringBuilder();
+//            		String line = null;
+//            		try {
+//            			while ((line = br.readLine()) != null) {
+//            				sb.append(line);
+//            			}
+//            		} catch (IOException e1) {
+//            			e1.printStackTrace();
+//            		} 
+//            		
+//            		Event currentEvent = new Event(sb.toString());
+    		
+            Log.d(DEBUG, "event: " + currentEvent);
+        
+            displayEvent(currentEvent);
+
+        	//List<Badge> badgeList = new ArrayList<Badge>();
+            
+            
+            SavePreferences("fb_token", facebook.getAccessToken());
+        }
     }
     
     Gallery gal;
@@ -316,6 +346,7 @@ public class EventRatioActivity extends Activity {
 
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
+
     
    
     
